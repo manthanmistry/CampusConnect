@@ -102,7 +102,7 @@ const ItemDetails = () => {
     }
 
     if (isOwner) {
-      toast.info('You cannot chat with yourself.');
+      navigate('/chat');
       return;
     }
 
@@ -157,7 +157,6 @@ const ItemDetails = () => {
       }}
     >
       <Row className="g-4">
-
         <Col md={5}>
           {imageUrl ? (
             <img
@@ -183,7 +182,6 @@ const ItemDetails = () => {
         </Col>
 
         <Col md={7}>
-
           <div className="d-flex gap-2 mb-3">
             <Badge
               className={
@@ -195,27 +193,18 @@ const ItemDetails = () => {
               {item.status}
             </Badge>
 
-            <Badge
-              className={claimBadgeClass[item.claimStatus]}
-            >
+            <Badge className={claimBadgeClass[item.claimStatus]}>
               {item.claimStatus}
             </Badge>
           </div>
 
-          <h3 className="fw-bold">
-            {item.title}
-          </h3>
+          <h3 className="fw-bold">{item.title}</h3>
 
-          <p className="text-muted">
-            {item.category}
-          </p>
+          <p className="text-muted">{item.category}</p>
 
-          <p>
-            {item.description}
-          </p>
+          <p>{item.description}</p>
 
           <Row className="g-3 my-3">
-
             <Col
               sm={6}
               className="d-flex align-items-center gap-2 text-muted"
@@ -251,11 +240,9 @@ const ItemDetails = () => {
               <FiUser />
               Reported by {item.reportedBy?.name || 'Unknown'}
             </Col>
-
           </Row>
 
           <div className="d-flex gap-2 mt-4 flex-wrap">
-
             {!user && (
               <Link
                 to="/login"
@@ -287,6 +274,17 @@ const ItemDetails = () => {
               </Button>
             )}
 
+            {user && isOwner && (
+              <Button
+                variant="outline-primary"
+                className="d-flex align-items-center gap-2"
+                onClick={() => navigate('/chat')}
+              >
+                <FiMessageCircle />
+                View Chats
+              </Button>
+            )}
+
             {isOwner && (
               <>
                 <Link
@@ -307,7 +305,6 @@ const ItemDetails = () => {
                 </Button>
               </>
             )}
-
           </div>
         </Col>
       </Row>
@@ -325,7 +322,6 @@ const ItemDetails = () => {
 
         <Form onSubmit={handleClaimSubmit}>
           <Modal.Body>
-
             <Form.Group className="mb-3">
               <Form.Label>
                 Why does this item belong to you?
@@ -363,11 +359,9 @@ const ItemDetails = () => {
                 }
               />
             </Form.Group>
-
           </Modal.Body>
 
           <Modal.Footer>
-
             <Button
               variant="outline-secondary"
               onClick={() => setShowClaimModal(false)}
@@ -382,7 +376,6 @@ const ItemDetails = () => {
             >
               {submitting ? 'Submitting...' : 'Submit Claim'}
             </Button>
-
           </Modal.Footer>
         </Form>
       </Modal>
@@ -394,9 +387,9 @@ const ItemDetails = () => {
         loading={deleting}
         message="This will permanently delete this report and any associated claims."
       />
-
     </div>
   );
 };
 
 export default ItemDetails;
+
